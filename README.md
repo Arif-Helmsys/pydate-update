@@ -13,7 +13,7 @@ Yol belirtin, bir versiyon yazın sonrasını modüle bırakın
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install pydater.
 
 ```bash
 pip install pydater
