@@ -6,50 +6,78 @@ import json
 class PyDate:
     def __init__(self,path:str,rawlink:str) -> None:
         """
-        :param `path`: lokal versiyon dosyasının konumu
-        :param `rawlink`: Githubdaki en güncel versiyon numarasının raw linkidir
+        :param `path`: Location of local version file
+        :param `rawlink`: Here is the `raw link` of the latest version number on github
         """
         self.__path = path
         self.__rawlink = rawlink
         self.__version = ""
         self.__read = None
 
-    def CreateVersionFile(self) -> bool:
+    def create_version_file(self,version:float) -> bool:
         """ 
-        Versiyon dosyası yoksa oluşturur.
-        Oluşan dosya json dosyasıdır.
+        If the version file does not exist, it will create it.
+        The resulting file is a `json` file.
         
-        Versiyon dosyası varsa `False` döndürür.
-        Versiyon dosyası yoksa `True` döndürür.
+        Returns `False` if the version file exists.
+        Returns `True` if the version file does not exist.
+        :param version: `float` accepts a value.
         """
+        if type(version) is not float:
+            raise TypeError("Float value is required!")
+
         if not os.path.isdir(self.__path):
             raise PathIsEmpty()
 
         if not os.path.exists(f"{self.__path}\\version.json"):
             with open(f"{self.__path}\\version.json","w") as f:
-                json.dump({'version':"0.0"},f)
+                json.dump({'version':f"{version}"},f)
             return True
         else:
             return False
     
     @property
-    def get_version(self):
-        " Githubda yazılan versiyon dosyasını döndürür (txt olması önerilir) "
+    def get_version(self) -> dict:
+        " Returns version file written on github"
         r = requests.get(self.__rawlink)
         self.__version = r.content.decode()
         self.__read = json.loads(self.__version)
         return self.__read
     
+    @property
     def isUpdate(self) -> bool:
-        " Güncelse `True`, Güncel değilse `False` döndürür "
+        " Returns `True` if Current, `False` if Not Current "
         with open(f"{self.__path}\\version.json","rb") as g:
             data = json.load(g)["version"]
-            print(data)
-            if data < self.get_version["version"]:
+            if float(data) < float(self.get_version["version"]):
                 return False
 
-            elif data > self.get_version["version"]:
-                raise LogicError()
-            
-            elif data == self.get_version["version"]:
+            elif float(data) == float(self.get_version["version"]):
                 return True
+            
+            else:
+                raise LogicError()
+    
+    def writeNewVersion(self) -> None:
+        """Value of the `version` key in the version.json file on Github
+            rewrites it by changing the value of the `version` key in the generated version.json.
+        """
+        with open(f"{self.__path}\\version.json","w") as g:
+            json.dump({"version":self.get_version["version"]},g)
+    
+    def downloadLink(self,url:str,extension:str) -> None:
+        """
+            :param url: Downloadlink of current program/file/exe available on Github
+            :param extension: File extension of the file to be downloaded
+             >>> extension = ".json",".exe",".pdf", ...       
+        """
+        if extension.startswith("."):
+            if extension.count(".") > 1:
+                raise TypeError("There is no such extension")
+            else:
+                resp = requests.get(url,allow_redirects=True)
+                with open(f"{self.__path}\\NowDownload{extension}","wb") as file:
+                    file.write(resp.content)
+        else:
+            raise TypeError("There is no such extension")
+    
