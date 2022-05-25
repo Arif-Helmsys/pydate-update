@@ -22,7 +22,7 @@ pip install pydater
 ## Usage
 EN:
 
-• First of all, you should save your current version number from github.
+• First of all, you should save your current version number in github.
 
 • Create a repository for this or use an existing one.
 
@@ -38,7 +38,7 @@ EN:
 
 TR:
 
-• Öncelikle github'dan güncel versiyon numaranızı saklamalısınız.
+• Öncelikle github'da güncel versiyon numaranızı saklamalısınız.
 
 • Bunun için repository oluşturun veya var olanı kullanın.
 
