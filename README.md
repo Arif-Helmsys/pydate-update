@@ -70,17 +70,6 @@ else:
     pd.writeNewVersion()
 ```
 
-```python
-pd.create_version_file()
-```
-If the version file does not exist, it will create it.
-The resulting file is a `json` file.
-
-Returns `False` if the version file exists. 
-Returns `True` if the version file does not exist.
-
-:param version: `float` accepts a value.
-
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
