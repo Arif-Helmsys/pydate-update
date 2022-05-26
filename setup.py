@@ -7,12 +7,13 @@ classifiers = [
 
 setup(
     name='pydater',
-    description='Basic program or file updater',
-    version='0.1',
-    long_description=open('README.md').read(),
+    description='Basic program and file updater for Github',
+    version='0.2',
+    long_description=open('README.md',encoding="utf-8").read(),
     long_description_content_type='text/markdown',
+    url="https://github.com/Arif-Helmsys",
     author='Helmsys',
-    author_email='arif.c20e@gmail.com',
+    author_email='...',
     license='MIT',
     classifiers=classifiers,
     keywords=['update','auto update','updater'],
