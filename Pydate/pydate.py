@@ -14,7 +14,7 @@ class PyDate:
         self.__version = ""
         self.__read = None
 
-    def create_version_file(self,version:float) -> bool:
+    def createVersionFile(self,version:float) -> bool:
         """ 
         If the version file does not exist, it will create it.
         The resulting file is a `json` file.
@@ -47,37 +47,52 @@ class PyDate:
     @property
     def isUpdate(self) -> bool:
         " Returns `True` if Current, `False` if Not Current "
-        with open(f"{self.__path}\\version.json","rb") as g:
-            data = json.load(g)["version"]
-            if float(data) < float(self.get_version["version"]):
-                return False
+        if os.path.exists(f"{self.__path}\\version.json"):
+            with open(f"{self.__path}\\version.json","rb") as g:
+                data = json.load(g)["version"]
+                if float(data) < float(self.get_version["version"]):
+                    return False
 
-            elif float(data) == float(self.get_version["version"]):
-                return True
-            
-            else:
-                raise LogicError()
-    
-    def writeNewVersion(self) -> None:
-        """Value of the `version` key in the version.json file on Github
-            rewrites it by changing the value of the `version` key in the generated version.json.
-        """
-        with open(f"{self.__path}\\version.json","w") as g:
-            json.dump({"version":self.get_version["version"]},g)
-    
-    def downloadLink(self,url:str,extension:str) -> None:
-        """
-            :param url: Downloadlink of current program/file/exe available on Github
-            :param extension: File extension of the file to be downloaded
-             >>> extension = ".json",".exe",".pdf", ...       
-        """
-        if extension.startswith("."):
-            if extension.count(".") > 1:
-                raise TypeError("There is no such extension")
-            else:
-                resp = requests.get(url,allow_redirects=True)
-                with open(f"{self.__path}\\NowDownload{extension}","wb") as file:
-                    file.write(resp.content)
+                elif float(data) == float(self.get_version["version"]):
+                    return True
+                
+                else:
+                    raise LogicError()
         else:
-            raise TypeError("There is no such extension")
+            raise VersionFileNotFound("Create version.json first!")
     
+    def downloadLink(self,url:str) -> None:
+        """
+            The argument given to the PyDate class is used as the path.
+            Creates a folder named "Installed"
+
+            :param url: Downloadlink of current program/file/exe available on Github.     
+        """
+        if self.downloaded_name.count(".") > 1:
+            raise TypeError("There is no such extension")
+        else:
+            if not os.path.exists(f"{os.getcwd()}\\Installed"):
+                os.mkdir(f"{self.__path}\\Installed")
+                resp = requests.get(url,allow_redirects=True)
+                with open(f"{self.__path}\\Installed\\{self.downloaded_name}","wb") as file:
+                    file.write(resp.content)
+    
+    @property
+    def downloaded_name(self):
+        "Value by adding an extension to the end of the name"
+        return self.__name
+
+    @downloaded_name.setter
+    def downloaded_name(self,name:str) -> None:
+        self.__name = name
+        return self.__name
+
+    def openNewVersion(self):
+        "Opens the downloaded file in the `Installed` folder and upgrades the `version.json` version."
+        __file = f"{os.getcwd()}\\Installed\\{self.downloaded_name}"
+        if os.path.exists(__file):
+            with open(f"{self.__path}\\version.json","w") as g:
+                json.dump({"version":self.get_version["version"]},g)
+            os.startfile(__file)
+        else:
+            raise FileNotFoundError("File 'Installed' does not exist")
