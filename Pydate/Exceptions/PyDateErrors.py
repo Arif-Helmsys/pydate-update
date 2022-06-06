@@ -6,7 +6,7 @@ class PathIsEmpty(Exception):
 class LogicError(Exception):
     " Logic throws an error when a mistake is made "
     def __init__(self, *args: object) -> None:
-        super().__init__("Mantıksal bir hata")
+        super().__init__("Logic Error")
 
 class VersionFileNotFound(Exception):
     " Error when version file does not exist "
