@@ -80,7 +80,7 @@ else:
 ## Example For Update 1.0
 ```python
 import os
-from Pydate import PyDate
+from Pydate import pydate
 
 path = r"C:\Users\...\MyFolder"
 raw = "https://raw.githubusercontent.com/..."
@@ -109,6 +109,21 @@ print(pd.readNewVersion["version"])
   * **`saveNewVersion`** is added ➥ **_method_**
 - Removed
   * **`openNewVersion`** is removed  ➥ **_method_**
+
+## Example For Update 1.3
+
+* Ability to update scripts
+```python
+from Pydate import PyDate
+
+path = r"C:\Users\..\myfolder"
+pd = Pydate(path=path,isScript=True) # if `isScript` is `False` script update cannot be used 
+
+script_raw_link = "https://raw.githubusercontent.com/Arif-Helmsys/test/main/deneme.py" # The content in the link is an updated script 
+pd.scriptUpdate(script_raw_link,myscript="myscript")
+```
+* Added
+  * **`scriptUpdate`** is added ➥ **_method_**
 ---
 ## About the **Pydate** Class
 
@@ -118,7 +133,7 @@ print(pd.readNewVersion["version"])
 
 * **`isUpdate`** **(_property_)**: Returns **`True`** if Current, **`False`** if Not Current.
 
-* **`downloaded_name`** **(_property_)**: Value by adding an extension to the end of the name.  **_eg_**: **`pd.downloaded_name = "my_file_name.exe"`** or **_eg_**: **`pd.downloaded_name = "my_file_name.py"`**... Examples can be expanded.
+* **`downloaded_name`** **(_property_)**: Value by adding an extension to the end of the name.  **_eg_**: **`pd.downloaded_name = "my_file_name.exe"`** or **_eg_**: **`pd.downloaded_name = "my_file_name.py"`**...https://raw.githubusercontent.com/Arif-Helmsys/test/main/deneme.py Examples can be expanded.
 
 * **`readNewVersion`** **(_property_)**: Returns the version of the locally created version file
 
@@ -126,6 +141,13 @@ print(pd.readNewVersion["version"])
 
 * **`saveNewVersion`** **(_method_)**: Upgrades the version value written in the locally maintained version. json file to the version on github. Takes one parameter. Default `True`. If open_ parameter is `True`: Opens the downloaded file in the `Installed` folder and upgrades the `version.json` version. If open_ parameter is `False`: only upgrades the version of the script at the specified location
 
+* **`scriptUpdate`** **(_method_)**: Scripts update. Compares your main script with the current script you keep on githu If your main script is not the same as the one you keep up to date on github, it will update it.
+
+    :param script_raw_link: eg:'https://raw.githubusercontent.com/.../../main/myScript.py'
+
+    :param myscript: the name of my main script eg msyscript
+
+    The method returns a bool value. If True, it is up to date. If False, it is not up-to-date. If false, change your script and write your script on github so that your relevant main script will be updated.
 
 ## Author
 [Helmsys](https://github.com/Arif-Helmsys)
