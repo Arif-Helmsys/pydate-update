@@ -9,7 +9,7 @@ Specify the path, write a version and leave the rest to the module
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install **`pydater`**.
 
 ```bash
-pip install pydater==1.0.3
+pip install pydater==1.0.5
 ```
 
 ## Usage
