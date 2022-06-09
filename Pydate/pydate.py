@@ -102,7 +102,7 @@ class PyDate:
                     return True
                 else:
                     with open(f"{self.__path}\\{myscript}.py","w",encoding="utf-8") as  f:
-                        f.write("".join(j for j in __data2))
+                        f.write("".join(j for j in __data2).replace("\n",""))
                     return False
             else:
                 raise FileNotFoundError("Relevant 'py' file not found or missing")
