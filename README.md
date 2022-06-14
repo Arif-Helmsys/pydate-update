@@ -110,7 +110,7 @@ print(pd.readNewVersion["version"])
 - Removed
   * **`openNewVersion`** is removed  ➥ **_method_**
 
-## Example For Update 1.3
+## Example For Update 1.0.5
 
 * Ability to update scripts
 ```python
